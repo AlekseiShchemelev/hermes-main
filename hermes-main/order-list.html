@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+		/>
+		<title>Список заказов</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<div class="fixed-navigation">
+			<div class="nav-title">📋 Список заказов</div>
+			<div class="nav-controls">
+				<div class="results-count" id="resultsCount">Найдено: 0</div>
+				<button class="back-btn" onclick="closeWindow()">Закрыть</button>
+			</div>
+		</div>
+
+		<div class="container" style="padding-top: 80px">
+			<div class="search-container">
+				<input
+					type="text"
+					id="searchInput"
+					class="search-input"
+					placeholder="🔍 Поиск по номеру заказа или днища..."
+				/>
+			</div>
+
+			<div class="mobile-controls" style="display: none">
+				<select id="sortSelect" class="mobile-sort">
+					<option value="createdAt-desc">Сначала новые</option>
+					<option value="createdAt-asc">Сначала старые</option>
+					<option value="orderNumber-asc">По номеру А-Я</option>
+					<option value="orderNumber-desc">По номеру Я-А</option>
+					<option value="date-desc">По дате ▼</option>
+					<option value="date-asc">По дате ▲</option>
+					<option value="bottomNumber-asc">По днищу А-Я</option>
+					<option value="bottomNumber-desc">По днищу Я-А</option>
+				</select>
+			</div>
+
+			<div class="table-container">
+				<table id="ordersTable" class="orders-table">
+					<thead>
+						<tr>
+							<th data-sort="date" class="sortable">
+								📅 Дата <span class="sort-icon">↕</span>
+							</th>
+							<th data-sort="orderNumber" class="sortable">
+								📦 Номер <span class="sort-icon">↕</span>
+							</th>
+							<th data-sort="diameter" class="sortable hide-mobile">
+								📏 Диаметр <span class="sort-icon">↕</span>
+							</th>
+							<th data-sort="thickness" class="sortable hide-mobile">
+								📐 Толщина <span class="sort-icon">↕</span>
+							</th>
+							<th data-sort="material" class="sortable hide-mobile">
+								🧱 Материал <span class="sort-icon">↕</span>
+							</th>
+							<th data-sort="bottomNumber" class="sortable">
+								🔢 Днище <span class="sort-icon">↕</span>
+							</th>
+							<th class="actions-header">Действия</th>
+						</tr>
+					</thead>
+					<tbody id="ordersTableBody"></tbody>
+				</table>
+			</div>
+
+			<div id="noResults" class="no-results" style="display: none">
+				<div class="no-results-icon">📭</div>
+				<div class="no-results-text">Заказы не найдены</div>
+			</div>
+
+			<div
+				class="mobile-card-view"
+				id="mobileCardView"
+				style="display: none"
+			></div>
+		</div>
+
+		<script src="js/database.js"></script>
+		<script src="js/order-list.js"></script>
+	</body>
+</html>

@@ -1,0 +1,63 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: hermes_postgres
+    environment:
+      POSTGRES_DB: hermes_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: hermes_backend
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=hermes_db
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+  frontend:
+    build: 
+      context: .              # ← Собираем из текущей директории
+      dockerfile: Dockerfile  # ← Используем наш Dockerfile
+    container_name: hermes_frontend
+    ports:
+      - "3000:80"            # ← Порт 3000 наружу → 80 внутри
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: hermes_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@hermes.local
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin  # Добавьте эту строку
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  pgadmin_data: 

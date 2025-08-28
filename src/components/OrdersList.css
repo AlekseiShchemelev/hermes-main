@@ -1,0 +1,237 @@
+/* Стили для списка заказов */
+.orders-list-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.list-header h1 {
+  color: #1a73e8;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.list-stats {
+  color: #666;
+  font-size: 14px;
+  background: #f8f9fa;
+  padding: 8px 16px;
+  border-radius: 20px;
+}
+
+/* Поиск */
+.search-container {
+  margin-bottom: 30px;
+}
+
+.search-input-wrapper {
+  position: relative;
+  max-width: 500px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #adb5bd;
+}
+
+.search-input {
+  width: 100%;
+  padding: 14px 16px 14px 48px;
+  border: 2px solid #e9ecef;
+  border-radius: 25px;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #1a73e8;
+  box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+}
+
+/* Таблица */
+.table-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.orders-table th {
+  background: #f8f9fa;
+  padding: 16px 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #495057;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.orders-table th.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+.orders-table th.sortable:hover {
+  background: #e9ecef;
+}
+
+.orders-table td {
+  padding: 16px 12px;
+  border-bottom: 1px solid #e9ecef;
+  vertical-align: middle;
+}
+
+.orders-table tr:hover {
+  background: #f8f9fa;
+}
+
+.order-number {
+  font-weight: 600;
+  color: #1a73e8;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+/* Мобильные карточки */
+.mobile-cards {
+  display: none;
+  gap: 15px;
+  flex-direction: column;
+}
+
+.order-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  margin-bottom: 15px;
+}
+
+.card-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.card-date {
+  color: #666;
+  font-size: 14px;
+}
+
+.card-content {
+  margin-bottom: 20px;
+}
+
+.card-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #f1f3f4;
+}
+
+.card-row:last-child {
+  border-bottom: none;
+}
+
+.card-label {
+  font-weight: 500;
+  color: #666;
+}
+
+.card-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* Нет результатов */
+.no-results {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+}
+
+.no-results-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.no-results-text {
+  font-size: 18px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .list-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+  
+  .list-header h1 {
+    font-size: 24px;
+  }
+  
+  .orders-table {
+    display: none;
+  }
+  
+  .mobile-cards {
+    display: flex;
+  }
+  
+  .search-input-wrapper {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .list-header h1 {
+    font-size: 20px;
+  }
+  
+  .order-card {
+    padding: 15px;
+  }
+  
+  .card-actions {
+    flex-direction: column;
+  }
+}
+
+/* Скрытие элементов на мобильных */
+.hide-mobile {
+  display: table-cell;
+}
+
+@media (max-width: 768px) {
+  .hide-mobile {
+    display: none;
+  }
+}
+

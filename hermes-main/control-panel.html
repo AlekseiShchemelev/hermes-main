@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Панель управления заказами</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<div class="fixed-navigation">
+			<div class="nav-title">⚙️ Панель управления</div>
+			<div class="nav-controls">
+				<button class="back-btn" onclick="window.close()">Закрыть</button>
+			</div>
+		</div>
+
+		<div class="container" style="padding-top: 80px">
+			<div class="control-panel">
+				<h1 style="text-align: center; color: #1a73e8; margin-bottom: 30px">
+					⚙️ Панель управления заказами
+				</h1>
+
+				<!-- Навигационные вкладки -->
+				<div class="tabs" style="margin-bottom: 20px">
+					<button class="tab-btn active" onclick="showTab('stats')">
+						📊 Статистика
+					</button>
+					<button class="tab-btn" onclick="showTab('data')">
+						📁 Управление данными
+					</button>
+					<button class="tab-btn" onclick="showTab('danger')">
+						⚠️ Опасная зона
+					</button>
+				</div>
+
+				<div id="statsTab" class="tab-content active">
+					<div class="stats-grid">
+						<div class="stat-card">
+							<div class="stat-value" id="totalOrders">0</div>
+							<div class="stat-label">Всего заказов</div>
+						</div>
+						<div class="stat-card">
+							<div class="stat-value" id="uniqueMaterials">0</div>
+							<div class="stat-label">Разных материалов</div>
+						</div>
+						<div class="stat-card">
+							<div class="stat-value" id="uniqueOrderNumbers">0</div>
+							<div class="stat-label">Уникальных номеров</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="dataTab" class="tab-content">
+					<div class="btn-container" style="display: grid; gap: 10px">
+						<button class="btn btn-primary" onclick="exportToCSV()">
+							📊 Экспорт в CSV
+						</button>
+						<button class="btn btn-secondary" onclick="startImport(false)">
+							📥 Импорт по номеру заказа
+						</button>
+						<button class="btn btn-secondary" onclick="startImport(true)">
+							📥 Импорт по номеру днища
+						</button>
+						<button class="btn btn-secondary" onclick="backupData()">
+							💾 Создать backup
+						</button>
+						<button class="btn btn-secondary" onclick="restoreBackup()">
+							📤 Восстановить backup
+						</button>
+					</div>
+				</div>
+
+				<div id="dangerTab" class="tab-content">
+					<div class="danger-zone">
+						<h2 class="danger-title">⚠️ Опасная зона</h2>
+						<p class="danger-text">
+							Эти действия невозможно отменить. Все данные будут безвозвратно
+							удалены. Рекомендуется создать backup перед выполнением этих
+							операций.
+						</p>
+						<div class="btn-container">
+							<button class="btn btn-danger" onclick="clearAllData()">
+								🗑️ Очистить все данные
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<input
+			type="file"
+			id="importFileInput"
+			accept=".csv"
+			style="display: none"
+		/>
+		<input
+			type="file"
+			id="restoreFileInput"
+			accept=".json"
+			style="display: none"
+		/>
+
+		<script src="js/database.js"></script>
+		<script src="js/data-manager.js"></script>
+		<script src="js/control-panel.js"></script>
+
+		<script>
+			// Функция для переключения вкладок
+			function showTab(tabName) {
+				// Скрыть все вкладки
+				document.querySelectorAll('.tab-content').forEach(tab => {
+					tab.classList.remove('active')
+				})
+
+				// Убрать активный класс у всех кнопок
+				document.querySelectorAll('.tab-btn').forEach(btn => {
+					btn.classList.remove('active')
+				})
+
+				// Показать выбранную вкладку
+				document.getElementById(tabName + 'Tab').classList.add('active')
+
+				// Активировать кнопку
+				document
+					.querySelector(`.tab-btn[onclick="showTab('${tabName}')"]`)
+					.classList.add('active')
+			}
+		</script>
+	</body>
+</html>
