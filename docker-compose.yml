@@ -12,6 +12,8 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     restart: unless-stopped
+    networks:
+      - hermes_network
 
   backend:
     build: 
@@ -32,6 +34,8 @@ services:
     volumes:
       - ./backend:/app
       - /app/node_modules
+    networks:
+      - hermes_network
 
   frontend:
     build: 
@@ -43,12 +47,14 @@ services:
     depends_on:
       - backend
     restart: unless-stopped
+    networks:
+      - hermes_network
 
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: hermes_pgadmin
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@hermes.local
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
       PGADMIN_DEFAULT_PASSWORD: admin
     ports:
       - "5050:80"
@@ -57,6 +63,12 @@ services:
     depends_on:
       - postgres
     restart: unless-stopped
+    networks:
+      - hermes_network
+
+networks:
+  hermes_network:
+    driver: bridge
 
 volumes:
   postgres_data:
